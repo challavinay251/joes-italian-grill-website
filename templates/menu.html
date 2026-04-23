@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    body {
+        background: #0b0b0b;
+        color: #ffffff;
+    }
+
+    h2 {
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+
+    .menu-nav {
+        text-align: center;
+        margin-bottom: 30px;
+        position: sticky;
+        top: 0;
+        background: #0b0b0b;
+        padding: 10px;
+        z-index: 100;
+    }
+
+    .menu-nav a {
+        margin: 5px;
+        padding: 8px 16px;
+        border-radius: 25px;
+        background: #1f1f1f;
+        color: #fff;
+        text-decoration: none;
+        font-size: 14px;
+        border: 1px solid rgba(255,255,255,0.1);
+        transition: 0.3s;
+    }
+
+    .menu-nav a:hover {
+        background: #f39c12;
+        color: #000;
+        transform: translateY(-2px);
+    }
+
+    .section-title {
+        font-size: 26px;
+        font-weight: 700;
+        margin-top: 60px;
+        border-left: 5px solid #f39c12;
+        padding-left: 12px;
+    }
+
+    .card {
+        background: #1a1a1a;
+        border-radius: 14px;
+        padding: 20px;
+        border: 1px solid rgba(255,255,255,0.08);
+        transition: 0.3s;
+        height: 100%;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 30px rgba(243,156,18,0.25);
+    }
+
+    .menu-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .menu-item h5 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 700;
+        color: #ffffff;
+    }
+
+    .menu-desc {
+        color: #dddddd;
+        font-size: 14px;
+        margin-top: 6px;
+    }
+
+    .menu-item strong {
+        color: #f39c12;
+        font-size: 18px;
+        font-weight: 700;
+    }
+</style>
+
+<h2 class="text-center mb-4">🍽 Tasty Menu Today</h2>
+
+<!-- NAV -->
+<div class="menu-nav">
+    <a href="#rolls">Rolls</a>
+    <a href="#appetizers">Appetizers</a>
+    <a href="#salads">Salads</a>
+    <a href="#veal">Veal</a>
+    <a href="#eggplant">Eggplant</a>
+    <a href="#seafood">Seafood</a>
+    <a href="#chicken">Chicken</a>
+    <a href="#pasta">Pasta</a>
+</div>
+
+<!-- Rolls -->
+<h3 id="rolls" class="section-title">🥖 Rolls & Stromboli</h3>
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="menu-item">
+                <h5>Stromboli</h5>
+                <strong>$12.95</strong>
+            </div>
+            <p class="menu-desc">Stuffed and baked to perfection</p>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="menu-item">
+                <h5>Spinach Roll</h5>
+                <strong>$12.95</strong>
+            </div>
+            <p class="menu-desc">Spinach, mozzarella & parmesan</p>
+        </div>
+    </div>
+</div>
+
+<!-- Appetizers -->
+<h3 id="appetizers" class="section-title">🍤 Appetizers</h3>
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="menu-item">
+                <h5>Fried Mozzarella</h5>
+                <strong>$6.95</strong>
+            </div>
+            <p class="menu-desc">Crispy with marinara</p>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="menu-item">
+                <h5>Fried Calamari</h5>
+                <strong>$8.95</strong>
+            </div>
+            <p class="menu-desc">Golden squid rings</p>
+        </div>
+    </div>
+</div>
+
+<!-- Salads -->
+<h3 id="salads" class="section-title">🥗 Salads</h3>
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="menu-item">
+                <h5>Tossed Salad</h5>
+                <strong>$2.99</strong>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="menu-item">
+                <h5>Grilled Chicken Salad</h5>
+                <strong>$12.95</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Veal -->
+<h3 id="veal" class="section-title">🥩 Veal Entrees</h3>
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="menu-item">
+                <h5>Veal Parmigiana</h5>
+                <strong>$13.95</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Eggplant -->
+<h3 id="eggplant" class="section-title">🍆 Eggplant Entrees</h3>
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="menu-item">
+                <h5>Eggplant Rollatini</h5>
+                <strong>$11.95</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Seafood -->
+<h3 id="seafood" class="section-title">🦐 Seafood Entrees</h3>
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="menu-item">
+                <h5>Shrimp Scampi</h5>
+                <strong>$15.95</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chicken -->
+<h3 id="chicken" class="section-title">🍗 Chicken Entrees</h3>
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="menu-item">
+                <h5>Chicken Parmigiana</h5>
+                <strong>$15.95</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Pasta -->
+<h3 id="pasta" class="section-title">🍝 Homemade Pasta</h3>
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="menu-item">
+                <h5>Spaghetti Tomato</h5>
+                <strong>$15.95</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,12 +1,7 @@
 from django.db import models
 
 class Category(models.Model):
-    CATEGORY_CHOICES = [
-        ('Veg', 'Veg'),
-        ('Non-Veg', 'Non-Veg'),
-    ]
-
-    name = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
@@ -14,13 +9,13 @@ class Category(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=200)
-    category = models.CharField(max_length=20, choices=[
-        ('Veg', 'Veg'),
-        ('Non-Veg', 'Non-Veg')
-    ])
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
+
     price = models.FloatField()
-    description = models.TextField()
-    image = models.ImageField(upload_to='products/')
+    description = models.TextField(blank=True)
+
+    image = models.ImageField(upload_to='products/', blank=True, null=True)
+
     is_best_seller = models.BooleanField(default=False)
 
     def __str__(self):
