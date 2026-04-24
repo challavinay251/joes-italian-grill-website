@@ -12,6 +12,7 @@
         letter-spacing: 1px;
     }
 
+    /* 🔥 NAV */
     .menu-nav {
         text-align: center;
         margin-bottom: 30px;
@@ -40,6 +41,7 @@
         transform: translateY(-2px);
     }
 
+    /* 🔥 SECTION */
     .section-title {
         font-size: 26px;
         font-weight: 700;
@@ -48,6 +50,7 @@
         padding-left: 12px;
     }
 
+    /* 🔥 CARD */
     .card {
         background: #1a1a1a;
         border-radius: 14px;
@@ -62,6 +65,7 @@
         box-shadow: 0 12px 30px rgba(243,156,18,0.25);
     }
 
+    /* 🔥 ITEM */
     .menu-item {
         display: flex;
         justify-content: space-between;
@@ -86,152 +90,63 @@
         font-size: 18px;
         font-weight: 700;
     }
+
+    .menu-image {
+        width: 90px;
+        height: 70px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-left: 15px;
+    }
 </style>
 
 <h2 class="text-center mb-4">🍽 Tasty Menu Today</h2>
 
-<!-- NAV -->
+<!-- 🔥 DYNAMIC NAV -->
 <div class="menu-nav">
-    <a href="#rolls">Rolls</a>
-    <a href="#appetizers">Appetizers</a>
-    <a href="#salads">Salads</a>
-    <a href="#veal">Veal</a>
-    <a href="#eggplant">Eggplant</a>
-    <a href="#seafood">Seafood</a>
-    <a href="#chicken">Chicken</a>
-    <a href="#pasta">Pasta</a>
+    {% for category in categories %}
+        <a href="#cat{{ category.id }}">{{ category.name }}</a>
+    {% endfor %}
 </div>
 
-<!-- Rolls -->
-<h3 id="rolls" class="section-title">🥖 Rolls & Stromboli</h3>
-<div class="row">
-    <div class="col-md-6 mb-3">
-        <div class="card">
-            <div class="menu-item">
-                <h5>Stromboli</h5>
-                <strong>$12.95</strong>
-            </div>
-            <p class="menu-desc">Stuffed and baked to perfection</p>
-        </div>
-    </div>
-    <div class="col-md-6 mb-3">
-        <div class="card">
-            <div class="menu-item">
-                <h5>Spinach Roll</h5>
-                <strong>$12.95</strong>
-            </div>
-            <p class="menu-desc">Spinach, mozzarella & parmesan</p>
-        </div>
-    </div>
-</div>
+<!-- 🔥 DYNAMIC MENU -->
+{% for category in categories %}
+    <h3 id="cat{{ category.id }}" class="section-title">
+        {{ category.name }}
+    </h3>
 
-<!-- Appetizers -->
-<h3 id="appetizers" class="section-title">🍤 Appetizers</h3>
-<div class="row">
-    <div class="col-md-6 mb-3">
-        <div class="card">
-            <div class="menu-item">
-                <h5>Fried Mozzarella</h5>
-                <strong>$6.95</strong>
-            </div>
-            <p class="menu-desc">Crispy with marinara</p>
-        </div>
-    </div>
-    <div class="col-md-6 mb-3">
-        <div class="card">
-            <div class="menu-item">
-                <h5>Fried Calamari</h5>
-                <strong>$8.95</strong>
-            </div>
-            <p class="menu-desc">Golden squid rings</p>
-        </div>
-    </div>
-</div>
+    <div class="row">
+        {% for product in category.products.all %}
+        <div class="col-md-6 mb-3">
+            <div class="card">
 
-<!-- Salads -->
-<h3 id="salads" class="section-title">🥗 Salads</h3>
-<div class="row">
-    <div class="col-md-6 mb-3">
-        <div class="card">
-            <div class="menu-item">
-                <h5>Tossed Salad</h5>
-                <strong>$2.99</strong>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 mb-3">
-        <div class="card">
-            <div class="menu-item">
-                <h5>Grilled Chicken Salad</h5>
-                <strong>$12.95</strong>
-            </div>
-        </div>
-    </div>
-</div>
+                <div class="menu-item">
 
-<!-- Veal -->
-<h3 id="veal" class="section-title">🥩 Veal Entrees</h3>
-<div class="row">
-    <div class="col-md-6 mb-3">
-        <div class="card">
-            <div class="menu-item">
-                <h5>Veal Parmigiana</h5>
-                <strong>$13.95</strong>
-            </div>
-        </div>
-    </div>
-</div>
+                    <div style="flex:1;">
+                        <h5>{{ product.name }}</h5>
 
-<!-- Eggplant -->
-<h3 id="eggplant" class="section-title">🍆 Eggplant Entrees</h3>
-<div class="row">
-    <div class="col-md-6 mb-3">
-        <div class="card">
-            <div class="menu-item">
-                <h5>Eggplant Rollatini</h5>
-                <strong>$11.95</strong>
-            </div>
-        </div>
-    </div>
-</div>
+                        {% if product.description %}
+                        <p class="menu-desc">
+                            {{ product.description }}
+                        </p>
+                        {% endif %}
 
-<!-- Seafood -->
-<h3 id="seafood" class="section-title">🦐 Seafood Entrees</h3>
-<div class="row">
-    <div class="col-md-6 mb-3">
-        <div class="card">
-            <div class="menu-item">
-                <h5>Shrimp Scampi</h5>
-                <strong>$15.95</strong>
-            </div>
-        </div>
-    </div>
-</div>
+                        <strong>${{ product.price }}</strong>
+                    </div>
 
-<!-- Chicken -->
-<h3 id="chicken" class="section-title">🍗 Chicken Entrees</h3>
-<div class="row">
-    <div class="col-md-6 mb-3">
-        <div class="card">
-            <div class="menu-item">
-                <h5>Chicken Parmigiana</h5>
-                <strong>$15.95</strong>
-            </div>
-        </div>
-    </div>
-</div>
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" class="menu-image">
+                    {% endif %}
 
-<!-- Pasta -->
-<h3 id="pasta" class="section-title">🍝 Homemade Pasta</h3>
-<div class="row">
-    <div class="col-md-6 mb-3">
-        <div class="card">
-            <div class="menu-item">
-                <h5>Spaghetti Tomato</h5>
-                <strong>$15.95</strong>
+                </div>
+
             </div>
         </div>
+        {% empty %}
+            <p class="text-muted">No items available</p>
+        {% endfor %}
     </div>
-</div>
+
+{% endfor %}
 
 {% endblock %}
