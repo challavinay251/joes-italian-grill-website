@@ -12,7 +12,7 @@
         letter-spacing: 1px;
     }
 
-    /* 🔥 NAV */
+
     .menu-nav {
         text-align: center;
         margin-bottom: 30px;
@@ -41,7 +41,7 @@
         transform: translateY(-2px);
     }
 
-    /* 🔥 SECTION */
+
     .section-title {
         font-size: 26px;
         font-weight: 700;
@@ -50,7 +50,7 @@
         padding-left: 12px;
     }
 
-    /* 🔥 CARD */
+
     .card {
         background: #1a1a1a;
         border-radius: 14px;
@@ -65,7 +65,7 @@
         box-shadow: 0 12px 30px rgba(243,156,18,0.25);
     }
 
-    /* 🔥 ITEM */
+
     .menu-item {
         display: flex;
         justify-content: space-between;
@@ -102,14 +102,14 @@
 
 <h2 class="text-center mb-4">🍽 Tasty Menu Today</h2>
 
-<!-- 🔥 DYNAMIC NAV -->
+
 <div class="menu-nav">
     {% for category in categories %}
         <a href="#cat{{ category.id }}">{{ category.name }}</a>
     {% endfor %}
 </div>
 
-<!-- 🔥 DYNAMIC MENU -->
+
 {% for category in categories %}
     <h3 id="cat{{ category.id }}" class="section-title">
         {{ category.name }}
