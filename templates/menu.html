@@ -2,115 +2,179 @@
 {% block content %}
 
 <style>
-    body {
-        background: #0b0b0b;
-        color: #ffffff;
-    }
-
-    h2 {
-        font-weight: 700;
-        letter-spacing: 1px;
-    }
+body {
+    background: #0b0b0b;
+    color: #ffffff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
 
-    .menu-nav {
-        text-align: center;
-        margin-bottom: 30px;
-        position: sticky;
-        top: 0;
-        background: #0b0b0b;
-        padding: 10px;
-        z-index: 100;
-    }
+h2 {
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #ffffff;
+}
 
-    .menu-nav a {
-        margin: 5px;
-        padding: 8px 16px;
-        border-radius: 25px;
-        background: #1f1f1f;
-        color: #fff;
-        text-decoration: none;
-        font-size: 14px;
-        border: 1px solid rgba(255,255,255,0.1);
-        transition: 0.3s;
-    }
+.search-input {
+    width: 350px;
+    padding: 12px 20px;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    background: #1f1f1f;
+    color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.15);
+    transition: 0.3s;
+}
 
-    .menu-nav a:hover {
-        background: #f39c12;
-        color: #000;
-        transform: translateY(-2px);
-    }
+.search-input:focus {
+    border: 1px solid #f39c12;
+    box-shadow: 0 0 10px rgba(243,156,18,0.3);
+}
 
+.search-input::placeholder {
+    color: #aaaaaa;
+}
 
-    .section-title {
-        font-size: 26px;
-        font-weight: 700;
-        margin-top: 60px;
-        border-left: 5px solid #f39c12;
-        padding-left: 12px;
-    }
+.btn-clear {
+    border-radius: 30px;
+    padding: 10px 20px;
+    border: 1px solid #ffffff;
+    background: transparent;
+    color: #ffffff;
+    display: none;
+}
 
+.btn-clear:hover {
+    background: #ffffff;
+    color: #000;
+}
 
-    .card {
-        background: #1a1a1a;
-        border-radius: 14px;
-        padding: 20px;
-        border: 1px solid rgba(255,255,255,0.08);
-        transition: 0.3s;
-        height: 100%;
-    }
+.result-text {
+    color: #e6e6e6;
+    font-size: 15px;
+}
 
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 30px rgba(243,156,18,0.25);
-    }
+.highlight-text {
+    color: #f39c12;
+    font-weight: 600;
+}
 
+.menu-nav {
+    text-align: center;
+    margin-bottom: 30px;
+    position: sticky;
+    top: 0;
+    background: #0b0b0b;
+    padding: 10px;
+    z-index: 100;
+}
 
-    .menu-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+.menu-nav a {
+    margin: 5px;
+    padding: 8px 16px;
+    border-radius: 25px;
+    background: #1f1f1f;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: 0.3s;
+}
 
-    .menu-item h5 {
-        margin: 0;
-        font-size: 18px;
-        font-weight: 700;
-        color: #ffffff;
-    }
+.menu-nav a:hover {
+    background: #f39c12;
+    color: #000;
+}
 
-    .menu-desc {
-        color: #dddddd;
-        font-size: 14px;
-        margin-top: 6px;
-    }
+.active-cat {
+    background: #f39c12 !important;
+    color: #000 !important;
+}
 
-    .menu-item strong {
-        color: #f39c12;
-        font-size: 18px;
-        font-weight: 700;
-    }
+.section-title {
+    font-size: 28px;
+    font-weight: 800;
+    margin-top: 60px;
+    border-left: 5px solid #f39c12;
+    padding-left: 12px;
+    color: #ffffff;
+}
 
-    .menu-image {
-        width: 90px;
-        height: 70px;
-        object-fit: cover;
-        border-radius: 8px;
-        margin-left: 15px;
-    }
+.card {
+    background: linear-gradient(145deg, #1a1a1a, #121212);
+    border-radius: 14px;
+    padding: 22px;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: all 0.25s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(243,156,18,0.25);
+}
+
+.menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.menu-item h5 {
+    font-size: 20px;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.menu-desc {
+    color: #e6e6e6;
+    font-size: 15px;
+    margin-top: 6px;
+    line-height: 1.5;
+}
+
+.menu-item strong {
+    color: #f39c12;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.menu-image {
+    width: 110px;
+    height: 85px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-left: 15px;
+}
 </style>
 
 <h2 class="text-center mb-4">🍽 Tasty Menu Today</h2>
 
+<!-- SEARCH -->
+<div class="text-center mb-4">
+    <input type="text" id="liveSearch"
+           placeholder="Search dishes..."
+           class="search-input">
 
+    <button id="clearSearch" class="btn-clear ms-2">Clear</button>
+
+    <p id="liveResult" class="result-text mt-3"></p>
+</div>
+
+<!-- CATEGORY NAV -->
 <div class="menu-nav">
+    <a href="#" class="active-cat">All</a>
     {% for category in categories %}
         <a href="#cat{{ category.id }}">{{ category.name }}</a>
     {% endfor %}
 </div>
 
-
 {% for category in categories %}
+<div class="menu-section">
+
     <h3 id="cat{{ category.id }}" class="section-title">
         {{ category.name }}
     </h3>
@@ -123,30 +187,110 @@
                 <div class="menu-item">
 
                     <div style="flex:1;">
-                        <h5>{{ product.name }}</h5>
+                        <h5 class="product-name">{{ product.name }}</h5>
 
-                        {% if product.description %}
-                        <p class="menu-desc">
+                        <p class="menu-desc product-desc">
                             {{ product.description }}
                         </p>
-                        {% endif %}
 
                         <strong>${{ product.price }}</strong>
                     </div>
 
                     {% if product.image %}
-                        <img src="{{ product.image.url }}" class="menu-image">
+                    <img src="{{ product.image.url }}" class="menu-image">
                     {% endif %}
 
                 </div>
 
             </div>
         </div>
-        {% empty %}
-            <p class="text-muted">No items available</p>
         {% endfor %}
     </div>
 
+</div>
 {% endfor %}
+
+<script>
+const searchInput = document.getElementById("liveSearch");
+const cards = document.querySelectorAll(".card");
+const resultText = document.getElementById("liveResult");
+const clearBtn = document.getElementById("clearSearch");
+
+searchInput.addEventListener("keyup", function () {
+
+    let query = this.value.toLowerCase().trim();
+    let visibleCount = 0;
+
+    clearBtn.style.display = query.length > 0 ? "inline-block" : "none";
+
+    document.querySelectorAll(".menu-section").forEach(section => {
+        section.style.display = "block";
+    });
+
+    cards.forEach(card => {
+        const name = card.querySelector(".product-name").innerText.toLowerCase();
+        const desc = card.querySelector(".product-desc").innerText.toLowerCase();
+
+        if (name.includes(query) || desc.includes(query)) {
+            card.parentElement.style.display = "block";
+            visibleCount++;
+            highlightText(card, query);
+        } else {
+            card.parentElement.style.display = "none";
+        }
+    });
+
+    document.querySelectorAll(".menu-section").forEach(section => {
+        const visibleItems = Array.from(section.querySelectorAll(".col-md-6"))
+            .filter(el => el.style.display !== "none");
+
+        if (visibleItems.length === 0) {
+            section.style.display = "none";
+        }
+    });
+
+    if (query.length > 0) {
+        resultText.innerHTML =
+            `${visibleCount} item${visibleCount !== 1 ? 's' : ''} found for
+            <span class="highlight-text">"${query}"</span>`;
+    } else {
+        resultText.innerHTML = "";
+        resetHighlight();
+    }
+});
+
+clearBtn.addEventListener("click", function () {
+    searchInput.value = "";
+    resultText.innerHTML = "";
+    clearBtn.style.display = "none";
+
+    cards.forEach(card => {
+        card.parentElement.style.display = "block";
+    });
+
+    document.querySelectorAll(".menu-section").forEach(section => {
+        section.style.display = "block";
+    });
+
+    resetHighlight();
+});
+
+function highlightText(card, query) {
+    const nameEl = card.querySelector(".product-name");
+    const descEl = card.querySelector(".product-desc");
+
+    [nameEl, descEl].forEach(el => {
+        let text = el.innerText;
+        let regex = new RegExp(`(${query})`, "gi");
+        el.innerHTML = text.replace(regex, `<span class="highlight-text">$1</span>`);
+    });
+}
+
+function resetHighlight() {
+    document.querySelectorAll(".product-name, .product-desc").forEach(el => {
+        el.innerHTML = el.innerText;
+    });
+}
+</script>
 
 {% endblock %}
