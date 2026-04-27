@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+body {
+    background: radial-gradient(circle at top, #111 0%, #050505 100%);
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* TITLE */
+.gallery-title {
+    text-align: center;
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.gallery-subtitle {
+    text-align: center;
+    color: #aaa;
+    margin-bottom: 40px;
+    font-size: 14px;
+}
+
+/* GRID */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+/* CARD */
+.gallery-card {
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    cursor: pointer;
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(10px);
+    transition: all 0.4s ease;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+}
+
+/* IMAGE */
+.gallery-card img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+/* HOVER EFFECT */
+.gallery-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+}
+
+.gallery-card:hover img {
+    transform: scale(1.12);
+}
+
+/* OVERLAY */
+.gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+}
+
+/* EMPTY STATE */
+.empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.03);
+    border: 1px dashed rgba(255,255,255,0.1);
+}
+
+.empty-state h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.empty-state p {
+    color: #aaa;
+    font-size: 14px;
+}
+
+/* SMALL ANIMATION */
+.gallery-card {
+    animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+
+<h2 class="gallery-title">📸 Our Gallery</h2>
+<p class="gallery-subtitle">Captured moments & memories</p>
+
+<div class="container">
+
+    {% if images %}
+    <div class="gallery-grid">
+
+        {% for img in images %}
+        <div class="gallery-card">
+
+            <img src="{{ img.get_image }}" alt="{{ img.title }}">
+
+            <div class="gallery-overlay">
+                {{ img.title }}
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+    <!-- EMPTY STATE -->
+    <div class="empty-state">
+        <h3>📭 No Images Yet</h3>
+        <p>No memories have been added to the gallery.</p>
+    </div>
+    {% endif %}
+
+</div>
+
+{% endblock %}

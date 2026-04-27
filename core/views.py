@@ -1,5 +1,6 @@
 from django.db.models import Q
 from django.shortcuts import render
+from .models import Gallery
 from products.models import Category, Product
 
 def home(request):
@@ -46,4 +47,12 @@ def menu(request):
         'query': query,
         'selected_category': selected_category,
         'result_count': products.count()
+    })
+
+
+def gallery(request):
+    images = Gallery.objects.all().order_by('-id')
+
+    return render(request, 'gallery.html', {
+        'images': images
     })
