@@ -2,86 +2,72 @@
 {% block content %}
 
 <style>
+/* BASE */
 body {
     background: #0b0b0b;
     color: #ffffff;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
-
+/*TITLE */
 h2 {
     font-weight: 800;
-    letter-spacing: 1px;
-    color: #ffffff;
+    letter-spacing: 0.5px;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
+/* SEARCH */
 .search-input {
-    width: 350px;
-    padding: 12px 20px;
-    border-radius: 30px;
-    border: none;
-    outline: none;
+    width: 420px;
+    max-width: 95%;
+    padding: 14px 22px;
+    border-radius: 40px;
+    border: 1px solid rgba(255,255,255,0.12);
     font-size: 15px;
-    background: #1f1f1f;
-    color: #ffffff;
-    border: 1px solid rgba(255,255,255,0.15);
-    transition: 0.3s;
+    background: #181818;
+    color: #fff;
+    transition: all 0.25s ease;
 }
 
 .search-input:focus {
-    border: 1px solid #f39c12;
-    box-shadow: 0 0 10px rgba(243,156,18,0.3);
-}
-
-.search-input::placeholder {
-    color: #aaaaaa;
+    border-color: #f39c12;
+    box-shadow: 0 0 0 2px rgba(243,156,18,0.2);
 }
 
 .btn-clear {
-    border-radius: 30px;
-    padding: 10px 20px;
-    border: 1px solid #ffffff;
+    border-radius: 40px;
+    padding: 10px 18px;
+    border: 1px solid rgba(255,255,255,0.3);
     background: transparent;
-    color: #ffffff;
+    color: #fff;
     display: none;
 }
 
-.btn-clear:hover {
-    background: #ffffff;
-    color: #000;
-}
-
-.result-text {
-    color: #e6e6e6;
-    font-size: 15px;
-}
-
-.highlight-text {
-    color: #f39c12;
-    font-weight: 600;
-}
-
+/* NAV */
 .menu-nav {
-    text-align: center;
-    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 10px;
+    margin-bottom: 25px;
     position: sticky;
     top: 0;
     background: #0b0b0b;
-    padding: 10px;
     z-index: 100;
 }
 
 .menu-nav a {
-    margin: 5px;
     padding: 8px 16px;
-    border-radius: 25px;
-    background: #1f1f1f;
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 14px;
-    border: 1px solid rgba(255,255,255,0.1);
-    transition: 0.3s;
+    border-radius: 30px;
+    background: #1c1c1c;
+    color: #fff;
+    font-size: 13px;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: all 0.2s ease;
+    white-space: nowrap;
 }
 
 .menu-nav a:hover {
@@ -94,64 +80,155 @@ h2 {
     color: #000 !important;
 }
 
+/* SECTION */
 .section-title {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 800;
-    margin-top: 60px;
-    border-left: 5px solid #f39c12;
+    margin: 50px 0 20px;
     padding-left: 12px;
-    color: #ffffff;
+    border-left: 4px solid #f39c12;
 }
 
+/* CARD*/
 .card {
-    background: linear-gradient(145deg, #1a1a1a, #121212);
-    border-radius: 14px;
-    padding: 22px;
-    border: 1px solid rgba(255,255,255,0.06);
-    transition: all 0.25s ease;
+    background: linear-gradient(145deg, #1a1a1a, #111);
+    border-radius: 16px;
+    padding: 18px;
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: all 0.3s ease;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(243,156,18,0.25);
+    transform: translateY(-6px);
+    box-shadow: 0 15px 30px rgba(243,156,18,0.2);
 }
 
+/* ITEM */
 .menu-item {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    gap: 20px;
+    gap: 15px;
 }
 
 .menu-item h5 {
-    font-size: 20px;
-    font-weight: 800;
-    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
 }
 
 .menu-desc {
-    color: #e6e6e6;
-    font-size: 15px;
-    margin-top: 6px;
+    color: #d0d0d0;
+    font-size: 14px;
     line-height: 1.5;
 }
 
 .menu-item strong {
     color: #f39c12;
-    font-size: 19px;
+    font-size: 16px;
+}
+
+/* IMAGE */
+.menu-image {
+    width: 110px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/*  POPULAR  */
+.popular-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.popular-card {
+    background: linear-gradient(145deg, #1a1a1a, #111);
+    border-radius: 14px;
+    padding: 12px;
+    transition: 0.3s;
+    height: 100%;
+}
+
+.popular-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(243,156,18,0.25);
+}
+
+.popular-img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+
+.popular-card h5 {
+    font-size: 15px;
     font-weight: 700;
 }
 
-.menu-image {
-    width: 110px;
-    height: 85px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-left: 15px;
+.popular-card strong {
+    font-size: 14px;
+}
+
+/*  RESPONSIVE */
+
+/* Tablet */
+@media (max-width: 992px) {
+    .popular-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+
+    .menu-item {
+        flex-direction: column;
+    }
+
+    .menu-image {
+        width: 100%;
+        height: 180px;
+    }
+
+    .popular-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .search-input {
+        width: 100%;
+    }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+    .popular-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 </style>
 
-<h2 class="text-center mb-4">🍽 Tasty Menu Today</h2>
+<h2 class="mb-4">🍽 Tasty Menu Today</h2>
+
+<h3 class="section-title mt-3"> Popular Dishes</h3>
+
+<div class="popular-grid">
+    {% for product in best_sellers %}
+    <div class="popular-card">
+
+        {% if product.image %}
+            <img src="{{ product.image.url }}" class="popular-img" loading="lazy">
+        {% endif %}
+
+        <h5>{{ product.name }}</h5>
+        <strong>${{ product.price }}</strong>
+
+    </div>
+    {% endfor %}
+</div>
 
 <!-- SEARCH -->
 <div class="text-center mb-4">
@@ -161,10 +238,10 @@ h2 {
 
     <button id="clearSearch" class="btn-clear ms-2">Clear</button>
 
-    <p id="liveResult" class="result-text mt-3"></p>
+    <p id="liveResult" class="mt-3"></p>
 </div>
 
-<!-- CATEGORY NAV -->
+<!-- NAV -->
 <div class="menu-nav">
     <a href="#" class="active-cat">All</a>
     {% for category in categories %}
@@ -172,6 +249,7 @@ h2 {
     {% endfor %}
 </div>
 
+<!-- MENU -->
 {% for category in categories %}
 <div class="menu-section">
 
@@ -181,7 +259,7 @@ h2 {
 
     <div class="row">
         {% for product in category.products.all %}
-        <div class="col-md-6 mb-3">
+        <div class="col-md-6 mb-3 product-card">
             <div class="card">
 
                 <div class="menu-item">
@@ -197,7 +275,9 @@ h2 {
                     </div>
 
                     {% if product.image %}
-                    <img src="{{ product.image.url }}" class="menu-image">
+                        <img src="{{ product.image.url }}"
+                             class="menu-image"
+                             loading="lazy">
                     {% endif %}
 
                 </div>
@@ -210,9 +290,11 @@ h2 {
 </div>
 {% endfor %}
 
+<!-- SCRIPT (same logic, optimized) -->
 <script>
 const searchInput = document.getElementById("liveSearch");
-const cards = document.querySelectorAll(".card");
+const cards = document.querySelectorAll(".product-card");
+const categories = document.querySelectorAll(".menu-section");
 const resultText = document.getElementById("liveResult");
 const clearBtn = document.getElementById("clearSearch");
 
@@ -221,76 +303,38 @@ searchInput.addEventListener("keyup", function () {
     let query = this.value.toLowerCase().trim();
     let visibleCount = 0;
 
-    clearBtn.style.display = query.length > 0 ? "inline-block" : "none";
-
-    document.querySelectorAll(".menu-section").forEach(section => {
-        section.style.display = "block";
-    });
+    clearBtn.style.display = query ? "inline-block" : "none";
 
     cards.forEach(card => {
         const name = card.querySelector(".product-name").innerText.toLowerCase();
         const desc = card.querySelector(".product-desc").innerText.toLowerCase();
 
         if (name.includes(query) || desc.includes(query)) {
-            card.parentElement.style.display = "block";
+            card.style.display = "block";
             visibleCount++;
-            highlightText(card, query);
         } else {
-            card.parentElement.style.display = "none";
+            card.style.display = "none";
         }
     });
 
-    document.querySelectorAll(".menu-section").forEach(section => {
-        const visibleItems = Array.from(section.querySelectorAll(".col-md-6"))
-            .filter(el => el.style.display !== "none");
-
-        if (visibleItems.length === 0) {
-            section.style.display = "none";
-        }
+    categories.forEach(section => {
+        const visible = section.querySelectorAll(".product-card:not([style*='display: none'])");
+        section.style.display = visible.length ? "block" : "none";
     });
 
-    if (query.length > 0) {
-        resultText.innerHTML =
-            `${visibleCount} item${visibleCount !== 1 ? 's' : ''} found for
-            <span class="highlight-text">"${query}"</span>`;
-    } else {
-        resultText.innerHTML = "";
-        resetHighlight();
-    }
+    resultText.innerHTML = query
+        ? `${visibleCount} item(s) found`
+        : "";
 });
 
-clearBtn.addEventListener("click", function () {
+clearBtn.addEventListener("click", () => {
     searchInput.value = "";
-    resultText.innerHTML = "";
     clearBtn.style.display = "none";
+    resultText.innerHTML = "";
 
-    cards.forEach(card => {
-        card.parentElement.style.display = "block";
-    });
-
-    document.querySelectorAll(".menu-section").forEach(section => {
-        section.style.display = "block";
-    });
-
-    resetHighlight();
+    cards.forEach(c => c.style.display = "block");
+    categories.forEach(s => s.style.display = "block");
 });
-
-function highlightText(card, query) {
-    const nameEl = card.querySelector(".product-name");
-    const descEl = card.querySelector(".product-desc");
-
-    [nameEl, descEl].forEach(el => {
-        let text = el.innerText;
-        let regex = new RegExp(`(${query})`, "gi");
-        el.innerHTML = text.replace(regex, `<span class="highlight-text">$1</span>`);
-    });
-}
-
-function resetHighlight() {
-    document.querySelectorAll(".product-name, .product-desc").forEach(el => {
-        el.innerHTML = el.innerText;
-    });
-}
 </script>
 
 {% endblock %}

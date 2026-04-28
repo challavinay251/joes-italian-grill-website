@@ -1,7 +1,8 @@
-from django.db.models import Q
 from django.shortcuts import render
-from .models import Gallery
+from django.db.models import Q
 from products.models import Category, Product
+from .models import Gallery
+
 
 def home(request):
     best_sellers = Product.objects.filter(is_best_seller=True)[:3]
@@ -12,12 +13,16 @@ def home(request):
         'products': products
     })
 
+
 def menu(request):
     query = request.GET.get('q', '').strip()
     selected_category = request.GET.get('category')
 
     categories = Category.objects.all()
     products = Product.objects.all()
+
+    # BEST SELLERS (FOR POPULAR SECTION)
+    best_sellers = Product.objects.filter(is_best_seller=True)[:6]
 
     # SMART SEARCH
     if query:
@@ -44,6 +49,7 @@ def menu(request):
     return render(request, 'menu.html', {
         'categories': categories,
         'category_products': category_products,
+        'best_sellers': best_sellers,
         'query': query,
         'selected_category': selected_category,
         'result_count': products.count()
