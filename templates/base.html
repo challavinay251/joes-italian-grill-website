@@ -10,6 +10,7 @@
             background-color: #0d0d0d;
             color: white;
             font-family: 'Segoe UI', sans-serif;
+            padding-top: 80px;
         }
 
         /* NAVBAR */
@@ -20,7 +21,7 @@
 
         .navbar-brand {
             font-weight: bold;
-            font-size: 24px;
+            font-size: 22px;
             color: #f39c12 !important;
         }
 
@@ -32,6 +33,30 @@
 
         .nav-link:hover {
             color: #f39c12 !important;
+        }
+
+        /* Clean hamburger */
+        .navbar-toggler {
+            border: none;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        /* Mobile dropdown styling */
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                background: rgba(0,0,0,0.95);
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 10px;
+            }
+
+            .nav-link {
+                margin: 10px 0;
+                font-size: 16px;
+            }
         }
 
         /* HERO */
@@ -60,13 +85,13 @@
         .btn-warning {
             background: linear-gradient(45deg, #f39c12, #e67e22);
             border: none;
-            padding: 12px 28px;
+            padding: 10px 20px;
             font-weight: bold;
             border-radius: 8px;
         }
 
         .btn-outline-light {
-            padding: 12px 28px;
+            padding: 10px 22px;
             border-radius: 8px;
         }
 
@@ -83,13 +108,11 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.7);
         }
 
-        /* SECTION TITLE */
         .section-title {
             font-weight: bold;
             margin-bottom: 20px;
         }
 
-        /* WHY US */
         .feature-box {
             background: #1a1a1a;
             padding: 25px;
@@ -107,25 +130,46 @@
             background: black;
             margin-top: 60px;
         }
-
     </style>
 </head>
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark shadow">
-    <div class="container">
-        <a class="navbar-brand" href="/">🍝 Joe's Italian Grill</a>
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark shadow fixed-top">
+    <div class="container d-flex align-items-center">
 
-        <div class="collapse navbar-collapse">
+        <!-- BRAND (LEFT) -->
+        <a class="navbar-brand me-auto" href="/">🍝 Joe's Italian Grill</a>
+
+        <!-- RIGHT SIDE CONTROLS -->
+        <div class="d-flex align-items-center">
+
+            <!-- 🍽 Menu Button (Mobile Only, hidden on /menu/) -->
+            {% if request.path != '/menu/' %}
+            <a href="/menu/" class="btn btn-warning d-lg-none me-2">
+                Menu
+            </a>
+            {% endif %}
+
+            <!-- ☰ HAMBURGER -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+        </div>
+
+        <!-- NAV LINKS -->
+        <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="/menu/">Menu</a></li>
-                <li class="nav-item"><a class="nav-link" href="/gallery/">Gallery</a> </li>
-                <li class="nav-item"><a class="nav-link" href="#">Reservations</a></li>
+                <li class="nav-item"><a class="nav-link" href="/gallery/">Gallery</a></li>
+                <li class="nav-item"><a class="nav-link" href="/reserve/">Reservations</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
             </ul>
         </div>
+
     </div>
 </nav>
 
@@ -136,6 +180,9 @@
 <footer class="text-center p-3">
     <p>© 2026 Joe's Italian Grill</p>
 </footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
