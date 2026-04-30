@@ -7,107 +7,201 @@ body {
     color: #ffffff;
 }
 
-
-.text-muted {
-    color: #cccccc !important;
+/* HERO */
+.hero {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9)),
+                url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092');
+    background-size: cover;
+    background-position: center;
+    padding: 100px 20px;
+    border-radius: 16px;
+    text-align: center;
+    margin-bottom: 40px;
 }
 
+.hero h1 {
+    font-size: 52px;
+    font-weight: 800;
+}
 
-.card {
-    background: #1c1c1c !important;
+.hero p {
+    color: #ccc;
+}
+
+/* SECTION TITLE */
+.section-title {
+    font-size: 26px;
+    font-weight: 800;
+    margin: 40px 0 20px;
+}
+
+/* BEST SELLERS SCROLL */
+.best-wrapper {
+    position: relative;
+}
+
+.best-scroll {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px 40px;
+}
+
+.best-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.best-card {
+    min-width: 280px;
+    background: #1c1c1c;
+    border-radius: 16px;
+    padding: 15px;
+    flex-shrink: 0;
+}
+
+.best-card img {
+    width: 100%;
+    height: 180px;
     border-radius: 12px;
-    border: none;
-    transition: 0.3s;
+    object-fit: cover;
+    margin-bottom: 10px;
 }
 
-.card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 25px rgba(243,156,18,0.2);
+.best-card h5 {
+    font-size: 18px;
+}
+
+.best-card strong {
+    color: #f39c12;
+}
+
+/* ARROWS */
+.scroll-btn {
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.8);
+    border: none;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 50%;
+    z-index: 10;
+}
+
+.scroll-btn.left { left: 0; }
+.scroll-btn.right { right: 0; }
+
+/* MENU CARDS */
+.card {
+    background: #1c1c1c;
+    border-radius: 14px;
+    border: none;
+    padding: 15px;
 }
 
 .card h5 {
-    color: #ffffff;
+    color: #fff;
 }
 
 .card p {
-    color: #cccccc;
+    color: #ccc;
 }
 
 .card strong {
     color: #f39c12;
 }
 
-
+/* FEATURES */
 .feature-box {
     background: #1c1c1c;
     padding: 20px;
     border-radius: 12px;
 }
 
-
-.text-center.mt-5.p-5 {
-    background: #1c1c1c !important;
+/* BOOK SECTION */
+.reserve-box {
+    background: #1c1c1c;
+    padding: 40px;
+    border-radius: 16px;
+    text-align: center;
 }
 
-
-.section-title {
-    color: #ffffff;
+.reserve-box h3 {
     font-weight: 700;
+}
+
+.reserve-box p {
+    color: #ccc;
+}
+
+/* MAP */
+.map-box iframe {
+    width: 100%;
+    height: 250px;
+    border-radius: 12px;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .best-card {
+        min-width: 220px;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
 }
 </style>
 
-
-<div class="hero mb-5 text-center">
+<!-- HERO -->
+<div class="hero">
     <h1>Authentic Italian Taste 🍝</h1>
     <p>Experience the finest Italian cuisine in town</p>
 
     <div class="mt-4">
-        <a href="#" class="btn btn-warning me-2">🍽 Order Now</a>
+        <a href="/menu/" class="btn btn-warning me-2">🍽 Order Now</a>
         <a href="/reserve/" class="btn btn-outline-light">📅 Book Table</a>
     </div>
 </div>
 
+<!-- 🔥 BEST SELLERS -->
+<h3 class="section-title">Best Sellers</h3>
 
-<h3 class="section-title">🔥 Best Sellers</h3>
-<div class="row">
-    {% for product in best_sellers %}
-    <div class="col-md-4 mb-4">
-        <div class="card p-3">
+<div class="best-wrapper">
+
+    <button class="scroll-btn left" onclick="scrollBest(-300)">❮</button>
+
+    <div class="best-scroll" id="bestScroll">
+        {% for product in best_sellers %}
+        <div class="best-card">
 
             {% if product.image %}
-            <img src="{{ product.image.url }}"
-                 class="img-fluid mb-2"
-                 style="height:220px; object-fit:cover; border-radius:8px;">
+            <img src="{{ product.image.url }}">
             {% endif %}
 
             <h5>{{ product.name }}</h5>
-
-            <p class="small">
-                {{ product.description|truncatewords:10 }}
-            </p>
-
-            <strong>₹{{ product.price }}</strong>
+            <strong>${{ product.price }}</strong>
 
         </div>
+        {% endfor %}
     </div>
-    {% empty %}
-        <p>No best sellers added</p>
-    {% endfor %}
+
+    <button class="scroll-btn right" onclick="scrollBest(300)">❯</button>
+
 </div>
 
-
-<h3 class="section-title mt-5">🍽 Our Menu</h3>
+<!-- MENU -->
+<h3 class="section-title">Our Menu</h3>
 
 <div class="row">
-    {% for product in products %}
+    {% for product in products|slice:":4" %}
     <div class="col-md-6 mb-4">
-        <div class="card p-3 d-flex flex-row align-items-center">
+        <div class="card d-flex flex-row align-items-center">
 
             <div style="flex:1;">
                 <h5>{{ product.name }}</h5>
-                <p class="small">
-                    {{ product.description|truncatewords:8 }}
-                </p>
+                <p>{{ product.description|truncatewords:8 }}</p>
                 <strong>${{ product.price }}</strong>
             </div>
 
@@ -118,21 +212,17 @@ body {
 
         </div>
     </div>
-    {% empty %}
-        <p>No menu items available</p>
     {% endfor %}
 </div>
 
 <div class="text-center">
-    <a href="{% url 'menu' %}" class="btn btn-warning mt-3">
-        View Full Menu
-    </a>
+    <a href="/menu/" class="btn btn-warning mt-3">View Full Menu</a>
 </div>
 
+<!-- WHY US -->
+<h3 class="section-title">Why Choose Us</h3>
 
-<h3 class="section-title mt-5">⭐ Why Choose Us</h3>
 <div class="row text-center">
-
     <div class="col-md-4 mb-4">
         <div class="feature-box">
             <h5>🍝 Authentic Taste</h5>
@@ -143,27 +233,26 @@ body {
     <div class="col-md-4 mb-4">
         <div class="feature-box">
             <h5>🚀 Fast Service</h5>
-            <p>Quick delivery and best customer experience</p>
+            <p>Quick delivery and best experience</p>
         </div>
     </div>
 
     <div class="col-md-4 mb-4">
         <div class="feature-box">
             <h5>🏆 Premium Quality</h5>
-            <p>High-quality ingredients and chef specials</p>
+            <p>Top-quality ingredients & chefs</p>
         </div>
     </div>
-
 </div>
 
+<!-- REVIEWS -->
+<h3 class="section-title">What Our Customers Say</h3>
 
-<h3 class="section-title mt-5">💬 What Our Customers Say</h3>
 <div class="row">
-
     <div class="col-md-4 mb-4">
         <div class="card p-3">
             ⭐⭐⭐⭐⭐
-            <p>"Amazing food and great ambiance!"</p>
+            <p>"Amazing food and ambiance!"</p>
             <strong>- Customer</strong>
         </div>
     </div>
@@ -171,7 +260,7 @@ body {
     <div class="col-md-4 mb-4">
         <div class="card p-3">
             ⭐⭐⭐⭐⭐
-            <p>"Best Italian restaurant in town!"</p>
+            <p>"Best Italian restaurant!"</p>
             <strong>- Customer</strong>
         </div>
     </div>
@@ -179,36 +268,44 @@ body {
     <div class="col-md-4 mb-4">
         <div class="card p-3">
             ⭐⭐⭐⭐⭐
-            <p>"Loved the pizza and pasta!"</p>
+            <p>"Loved pizza & pasta!"</p>
             <strong>- Customer</strong>
         </div>
     </div>
-
 </div>
 
-
-<div class="text-center mt-5 p-5" style="border-radius:12px;">
+<!-- RESERVE -->
+<div class="reserve-box mt-5">
     <h3>📅 Reserve Your Table</h3>
-    <p class="text-muted">
-        Book your table now and enjoy a premium dining experience
-    </p>
+    <p>Book now and enjoy premium dining</p>
     <a href="/reserve/" class="btn btn-warning">Book Now</a>
 </div>
 
+<!-- VISIT -->
 <h3 class="section-title mt-5">📍 Visit Us</h3>
+
 <div class="row">
-
     <div class="col-md-6">
-        <p><strong>📍 Address:</strong> Rogers, AR</p>
-        <p><strong>📞 Phone:</strong> +1 123456789</p>
-        <p><strong>📧 Email:</strong> info@joesitalianeatery.com</p>
+        <p><strong>Address:</strong> Rogers, AR</p>
+        <p><strong>Phone:</strong> +1 123456789</p>
+        <p><strong>Email:</strong> info@joesitalianeatery.com</p>
     </div>
 
-    <div class="col-md-6">
-        <iframe src="https://maps.google.com/maps?q=rogers%20ar&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                width="100%" height="250" style="border-radius:10px;"></iframe>
+    <div class="col-md-6 map-box">
+        <a href="https://maps.app.goo.gl/wtaNLyFgYZxqZenh8" target="_blank">
+            <iframe src="https://maps.google.com/maps?q=rogers%20ar&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+        </a>
     </div>
-
 </div>
+
+<!-- SCRIPT -->
+<script>
+function scrollBest(amount) {
+    document.getElementById("bestScroll").scrollBy({
+        left: amount,
+        behavior: "smooth"
+    });
+}
+</script>
 
 {% endblock %}

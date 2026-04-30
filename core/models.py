@@ -1,5 +1,7 @@
 from django.db import models
 import re
+
+
 class Gallery(models.Model):
     title = models.CharField(max_length=200)
     image = models.ImageField(upload_to='gallery/', blank=True, null=True)
@@ -21,3 +23,14 @@ class Gallery(models.Model):
 
     def __str__(self):
         return self.title
+
+
+
+class Testimonial(models.Model):
+    name = models.CharField(max_length=100)
+    rating = models.IntegerField(default=5)
+    review = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} ({self.rating}⭐)"

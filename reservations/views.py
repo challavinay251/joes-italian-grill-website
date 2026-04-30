@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from django.conf import settings
 from datetime import date
@@ -6,8 +6,6 @@ from .models import Reservation
 
 
 def reserve(request):
-    error = None
-    success = False
 
     if request.method == "POST":
         name = request.POST.get('name')
@@ -20,23 +18,30 @@ def reserve(request):
 
         # Validation
         if res_date and str(res_date) < str(date.today()):
-            error = "Past date not allowed"
+            return render(request, 'reservations/reserve.html', {
+                'error': "Past date not allowed",
+                'today': date.today()
+            })
 
-        elif int(guests) <= 0:
-            error = "Guests must be at least 1"
+        if not guests or int(guests) <= 0:
+            return render(request, 'reservations/reserve.html', {
+                'error': "Guests must be at least 1",
+                'today': date.today()
+            })
 
-        else:
-            reservation = Reservation.objects.create(
-                name=name,
-                phone=phone,
-                email=email,
-                date=res_date,
-                time=res_time,
-                guests=guests,
-                message=message,
-            )
+        # Save
+        Reservation.objects.create(
+            name=name,
+            phone=phone,
+            email=email,
+            date=res_date,
+            time=res_time,
+            guests=guests,
+            message=message,
+        )
 
-            # Email to customer
+        # Email (safe)
+        try:
             send_mail(
                 "Reservation Confirmed 🍽",
                 f"Hi {name}, your table is booked on {res_date} at {res_time}.",
@@ -45,7 +50,6 @@ def reserve(request):
                 fail_silently=True,
             )
 
-            # Email to owner
             send_mail(
                 "New Reservation",
                 f"{name} booked for {guests} people on {res_date} at {res_time}.",
@@ -53,10 +57,16 @@ def reserve(request):
                 [settings.EMAIL_HOST_USER],
                 fail_silently=True,
             )
+        except:
+            pass
 
-            success = True
+        # ✅ REDIRECT (IMPORTANT FIX)
+        return redirect('/reserve/?success=1')
+
+    # GET request
+    success = request.GET.get('success')
 
     return render(request, 'reservations/reserve.html', {
-        'error': error,
-        'success': success
+        'success': success,
+        'today': date.today()
     })

@@ -4,14 +4,23 @@ from products.models import Category, Product
 from .models import Gallery
 
 
+from django.shortcuts import render
+from products.models import Product
+from .models import Testimonial
+
 def home(request):
-    best_sellers = Product.objects.filter(is_best_seller=True)[:3]
+    best_sellers = Product.objects.filter(is_best_seller=True)
     products = Product.objects.all()[:6]
+    testimonials = Testimonial.objects.all().order_by('-id')[:6]
 
     return render(request, 'home.html', {
         'best_sellers': best_sellers,
-        'products': products
+        'products': products,
+        'testimonials': testimonials
     })
+
+def faq(request):
+    return render(request, 'faq.html')
 
 
 def menu(request):
