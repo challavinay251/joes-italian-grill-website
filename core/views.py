@@ -1,12 +1,13 @@
-from django.shortcuts import render
 from django.db.models import Q
 from products.models import Category, Product
 from .models import Gallery
-
-
-from django.shortcuts import render
-from products.models import Product
 from .models import Testimonial
+from products.models import Product
+from django.shortcuts import render
+from django.core.mail import send_mail
+from django.conf import settings
+
+
 
 def home(request):
     best_sellers = Product.objects.filter(is_best_seller=True)
@@ -22,6 +23,12 @@ def home(request):
 def faq(request):
     return render(request, 'faq.html')
 
+def offers(request):
+    offers = Product.objects.filter(is_offer=True)
+
+    return render(request, 'offers.html', {
+        'offers': offers
+    })
 
 def menu(request):
     query = request.GET.get('q', '').strip()
@@ -65,9 +72,37 @@ def menu(request):
     })
 
 
+
 def gallery(request):
     images = Gallery.objects.all().order_by('-id')
+    return render(request, 'gallery.html', {'images': images})
 
-    return render(request, 'gallery.html', {
-        'images': images
-    })
+
+def contact(request):
+    success = False
+
+    if request.method == "POST":
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+
+        full_message = f"""
+New Contact Message
+
+Name: {name}
+Email: {email}
+
+Message:
+{message}
+"""
+
+        send_mail(
+            subject=f"New Contact Message from {name}",
+            message=full_message,
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[settings.EMAIL_HOST_USER],  # send to yourself
+        )
+
+        success = True
+
+    return render(request, 'contact.html', {'success': success})

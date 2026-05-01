@@ -3,8 +3,8 @@
 
 <style>
 body {
-    background: #0b0b0b;
-    color: #f5f5f5;
+    background: #f4f6f8;
+    color: #222;
     font-family: 'Segoe UI', sans-serif;
 }
 
@@ -15,7 +15,7 @@ h2 {
     font-weight: 700;
 }
 
-/* 🔥 POPULAR (UPDATED TO SCROLL) */
+/* 🔥 POPULAR */
 .popular-wrapper {
     position: relative;
     margin-bottom: 25px;
@@ -36,11 +36,17 @@ h2 {
 .popular-card {
     min-width: 180px;
     max-width: 180px;
-    background: #141414;
+    background: #fff;
     border-radius: 14px;
     padding: 10px;
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid #eee;
     flex-shrink: 0;
+    transition: 0.25s;
+}
+
+.popular-card:hover {
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
 }
 
 .popular-img {
@@ -53,12 +59,12 @@ h2 {
 
 .popular-card h6 {
     font-size: 14px;
-    color: #fff;
+    color: #222;
 }
 
 .popular-card strong {
     font-size: 13px;
-    color: #f39c12;
+    color: #e67e22;
 }
 
 /* 🔥 SEARCH */
@@ -75,9 +81,9 @@ h2 {
     width: 100%;
     padding: 12px 40px 12px 18px;
     border-radius: 40px;
-    border: 1px solid rgba(255,255,255,0.1);
-    background: #121212;
-    color: #fff;
+    border: 1px solid #ddd;
+    background: #fff;
+    color: #222;
 }
 
 .clear-btn {
@@ -87,7 +93,7 @@ h2 {
     transform: translateY(-50%);
     border: none;
     background: transparent;
-    color: #aaa;
+    color: #777;
     display: none;
 }
 
@@ -99,7 +105,7 @@ h2 {
     position: sticky;
     top: 80px;
     z-index: 99;
-    background: #0b0b0b;
+    background: #f4f6f8;
     padding: 10px 0;
 }
 
@@ -125,30 +131,28 @@ h2 {
 .menu-nav a {
     padding: 8px 16px;
     border-radius: 30px;
-    background: #1a1a1a;
-    color: #ccc;
-    border: 1px solid rgba(255,255,255,0.08);
+    background: #fff;
+    color: #555;
+    border: 1px solid #ddd;
     white-space: nowrap;
     text-decoration: none;
-}
-
-.menu-nav a:hover {
-    text-decoration: none;
+    font-weight: 500;
 }
 
 .active-cat {
-    background: #fff !important;
-    color: #000 !important;
+    background: #e67e22 !important;
+    color: #fff !important;
+    border-color: #e67e22;
 }
 
-/* ARROWS (shared) */
+/* SCROLL BUTTON */
 .scroll-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0,0,0,0.8);
-    border: none;
-    color: #fff;
+    background: #fff;
+    border: 1px solid #ddd;
+    color: #333;
     padding: 6px 10px;
     border-radius: 50%;
     cursor: pointer;
@@ -159,15 +163,24 @@ h2 {
 
 /* SECTION */
 .section-title {
-    font-size: 22px;
-    margin: 30px 0 15px;
+    font-size: 24px;
+    margin: 30px 0 20px;
+    font-weight: 700;
+    color: #222;
 }
 
-/* CARD */
+/* 🔥 CARD FIX */
 .card {
-    background: transparent;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    padding: 15px 0;
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #eaeaea;
+    padding: 16px;
+    transition: 0.25s;
+}
+
+.card:hover {
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
 }
 
 /* MENU ITEM */
@@ -179,24 +192,27 @@ h2 {
 
 .product-name {
     font-weight: 700;
-    color: #fff;
+    font-size: 18px;
+    color: #222;
 }
 
 .menu-desc {
-    color: #ccc;
+    color: #666;
     font-size: 14px;
 }
 
 .menu-item strong {
-    color: #fff;
+    color: #000;
+    font-size: 16px;
 }
 
 /* IMAGE */
 .menu-image {
     width: 110px;
     height: 90px;
-    border-radius: 14px;
+    border-radius: 12px;
     object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 /* MOBILE */
@@ -216,18 +232,17 @@ h2 {
     }
 
     .popular-card {
-        min-width: 140px; /* 👈 shows ~3 items */
+        min-width: 140px;
     }
 }
 </style>
 
 <h2> Joe's Italian Grill Menu </h2>
 
-<!-- 🔥 POPULAR -->
+<!-- POPULAR -->
 <h3 class="section-title">Popular Dishes</h3>
 
 <div class="popular-wrapper">
-
     <button class="scroll-btn left" onclick="scrollPopular(-300)">❮</button>
 
     <div class="popular-scroll" id="popularScroll">
@@ -243,10 +258,9 @@ h2 {
     </div>
 
     <button class="scroll-btn right" onclick="scrollPopular(300)">❯</button>
-
 </div>
 
-<!-- 🔥 TOP BAR -->
+<!-- TOP BAR -->
 <div class="menu-top-bar">
 
     <div class="search-box">
@@ -300,8 +314,9 @@ h2 {
 </div>
 {% endfor %}
 
-<!-- SEARCH SCRIPT -->
-<script>
+<!-- SCRIPTS (UNCHANGED) -->
+
+    <script>
 document.addEventListener("DOMContentLoaded", function () {
 
     const searchInput = document.getElementById("liveSearch");
@@ -310,7 +325,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const sections = document.querySelectorAll(".menu-section");
     const resultText = document.getElementById("liveResult");
 
-    searchInput.addEventListener("keyup", function () {
+    searchInput.addEventListener("input", function () {
         let query = this.value.toLowerCase().trim();
         let count = 0;
 
@@ -328,9 +343,18 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
+        // show/hide category sections properly
         sections.forEach(section => {
-            const visible = section.querySelectorAll(".product-card:not([style*='none'])");
-            section.style.display = visible.length ? "block" : "none";
+            const visibleItems = section.querySelectorAll(".product-card");
+            let hasVisible = false;
+
+            visibleItems.forEach(item => {
+                if (item.style.display !== "none") {
+                    hasVisible = true;
+                }
+            });
+
+            section.style.display = hasVisible ? "block" : "none";
         });
 
         resultText.innerHTML = query ? count + " item(s) found" : "";
@@ -347,8 +371,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 </script>
-
-<!-- SCROLL SCRIPTS -->
 <script>
 function scrollMenu(amount) {
     document.getElementById("menuNav").scrollLeft += amount;

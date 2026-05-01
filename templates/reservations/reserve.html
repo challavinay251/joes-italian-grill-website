@@ -3,31 +3,32 @@
 
 <style>
 body {
-    background: #0b0b0b;
-    color: #fff;
+    background: #f4f6f8;
+    color: #222;
     font-family: 'Segoe UI', sans-serif;
 }
 
 /* TITLE */
 h2 {
     font-weight: 700;
+    color: #222;
 }
 
 /* FORM BOX */
 .form-box {
     max-width: 600px;
     margin: auto;
-    background: linear-gradient(145deg, #1a1a1a, #111);
+    background: #ffffff;
     padding: 30px;
     border-radius: 18px;
-    border: 1px solid rgba(255,255,255,0.06);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    border: 1px solid #eaeaea;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
 
 /* LABEL */
 label {
     font-size: 13px;
-    color: #aaa;
+    color: #666;
     margin-bottom: 4px;
     display: block;
 }
@@ -38,9 +39,9 @@ input, textarea {
     margin-bottom: 14px;
     padding: 12px 14px;
     border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.08);
-    background: #121212;
-    color: #fff;
+    border: 1px solid #ddd;
+    background: #fff;
+    color: #222;
     font-size: 14px;
     transition: all 0.2s ease;
 }
@@ -48,11 +49,11 @@ input, textarea {
 /* FOCUS */
 input:focus, textarea:focus {
     outline: none;
-    border-color: #f39c12;
-    box-shadow: 0 0 0 2px rgba(243,156,18,0.2);
+    border-color: #e67e22;
+    box-shadow: 0 0 0 2px rgba(230,126,34,0.15);
 }
 
-/* DATE & TIME FIX (ICON VISIBLE) */
+/* DATE & TIME ICON FIX */
 input[type="date"],
 input[type="time"] {
     cursor: pointer;
@@ -60,7 +61,7 @@ input[type="time"] {
 
 input[type="date"]::-webkit-calendar-picker-indicator,
 input[type="time"]::-webkit-calendar-picker-indicator {
-    filter: invert(1);
+    filter: invert(0); /* light theme fix */
     cursor: pointer;
 }
 
@@ -72,13 +73,13 @@ button {
     padding: 12px;
     border-radius: 10px;
     font-weight: 700;
-    color: #000;
+    color: #fff;
     transition: 0.25s;
 }
 
 button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(243,156,18,0.4);
+    box-shadow: 0 6px 15px rgba(230,126,34,0.3);
 }
 
 button:disabled {
@@ -88,21 +89,21 @@ button:disabled {
 
 /* ALERTS */
 .alert-success {
-    background: rgba(46, 204, 113, 0.15);
-    color: #2ecc71;
+    background: #eafaf1;
+    color: #27ae60;
     padding: 12px;
     border-radius: 10px;
     margin-bottom: 15px;
-    border: 1px solid rgba(46,204,113,0.3);
+    border: 1px solid #c3f0d5;
 }
 
 .alert-error {
-    background: rgba(231, 76, 60, 0.15);
-    color: #e74c3c;
+    background: #fdecea;
+    color: #c0392b;
     padding: 12px;
     border-radius: 10px;
     margin-bottom: 15px;
-    border: 1px solid rgba(231,76,60,0.3);
+    border: 1px solid #f5c6cb;
 }
 
 /* GRID */
@@ -131,29 +132,24 @@ button:disabled {
 
 <div class="form-box">
 
-    <!-- SUCCESS -->
     {% if success %}
         <div class="alert-success">
             ✅ Reservation confirmed! Check your email.
         </div>
     {% endif %}
 
-    <!-- ERROR -->
     {% if error %}
         <div class="alert-error">
             ⚠ {{ error }}
         </div>
     {% endif %}
 
-    <!-- FORM -->
     <form method="POST" id="reserveForm">
         {% csrf_token %}
 
-        <!-- NAME -->
         <label>Full Name</label>
         <input type="text" name="name" placeholder="Enter your name" required>
 
-        <!-- EMAIL + PHONE -->
         <div class="form-row">
             <div>
                 <label>Email</label>
@@ -165,7 +161,6 @@ button:disabled {
             </div>
         </div>
 
-        <!-- DATE + TIME -->
         <div class="form-row">
             <div>
                 <label>Select Date</label>
@@ -177,15 +172,12 @@ button:disabled {
             </div>
         </div>
 
-        <!-- GUESTS -->
         <label>Guests</label>
         <input type="number" name="guests" min="1" max="20" placeholder="Number of guests" required>
 
-        <!-- MESSAGE -->
         <label>Special Request</label>
         <textarea name="message" placeholder="Optional"></textarea>
 
-        <!-- BUTTON -->
         <button type="submit" id="submitBtn">Reserve Now</button>
 
     </form>
@@ -193,7 +185,6 @@ button:disabled {
 </div>
 
 <script>
-// Prevent double submit + UX
 const form = document.getElementById("reserveForm");
 const btn = document.getElementById("submitBtn");
 

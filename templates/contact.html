@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+body {
+    background: #f8f9fa;
+    color: #111;
+}
+
+/* CARD */
+.contact-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 14px;
+    border: 1px solid #eee;
+    height: 100%;
+}
+
+/* HEADINGS */
+.contact-card h5 {
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+/* INPUTS */
+.form-control {
+    background: #fff;
+    border: 1px solid #ddd;
+    color: #111;
+    border-radius: 8px;
+}
+
+.form-control:focus {
+    border-color: #e67e22;
+    box-shadow: 0 0 0 2px rgba(230,126,34,0.15);
+}
+
+/* BUTTON */
+.btn-send {
+    background: #e67e22;
+    border: none;
+    font-weight: 600;
+    color: #fff;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.btn-send:hover {
+    background: #cf711f;
+}
+
+/* MAP */
+.map-box iframe {
+    width: 100%;
+    height: 300px;
+    border-radius: 12px;
+    border: none;
+}
+
+/* 🔥 DIRECTION BUTTON */
+.btn-direction {
+    background: #e67e22;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.btn-direction:hover {
+    background: #cf711f;
+    color: #fff;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+    .contact-card {
+        padding: 18px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    .map-box iframe {
+        height: 250px;
+    }
+}
+</style>
+
+<h2 class="text-center mb-4">📞 Contact Us</h2>
+
+<div class="row g-3">
+
+    <!-- LEFT SIDE -->
+    <div class="col-md-5">
+        <div class="contact-card">
+
+            <h5>📍 Address</h5>
+            <p>Rogers, Arkansas, USA</p>
+
+            <h5>📞 Phone</h5>
+            <p>+1 123-456-7890</p>
+
+            <h5>📧 Email</h5>
+            <p>{{ request.user.email|default:"your_email@gmail.com" }}</p>
+
+            <h5>🕒 Hours</h5>
+            <p>Mon - Sun: 10 AM – 10 PM</p>
+
+            <div class="text-center mt-3">
+                <a href="https://maps.app.goo.gl/T5mz4vw2ATunr8Qy8" target="_blank" class="btn-direction">
+                    Get Directions
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- RIGHT SIDE FORM -->
+    <div class="col-md-7">
+        <div class="contact-card">
+
+            <h5 class="mb-3">Send Message</h5>
+
+            {% if success %}
+            <div class="alert alert-success">
+                ✅ Message sent successfully!
+            </div>
+            {% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <input type="text" name="name" placeholder="Your Name"
+                           class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <input type="email" name="email" placeholder="Your Email"
+                           class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <textarea name="message" rows="4"
+                              placeholder="Your Message"
+                              class="form-control" required></textarea>
+                </div>
+
+                <button class="btn btn-send w-100">
+                    Send Message
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- MAP -->
+<h3 class="mt-4 mb-3 text-center">📍 Find Us</h3>
+
+<div class="map-box">
+    <iframe src="https://maps.google.com/maps?q=rogers%20arkansas&output=embed"></iframe>
+</div>
+
+{% endblock %}

@@ -3,29 +3,57 @@
 
 <style>
 body {
-    background: #0b0b0b;
-    color: #ffffff;
+    background: #f8f9fa;
+    color: #222;
 }
 
-/* HERO */
+/* HERO (NAPOLI STYLE) */
 .hero {
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9)),
-                url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092');
+    position: relative;
+    height: 80vh;
+    background: url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092');
     background-size: cover;
     background-position: center;
-    padding: 100px 20px;
+    display: flex;
+    align-items: center;
     border-radius: 16px;
-    text-align: center;
+    overflow: hidden;
     margin-bottom: 40px;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+    max-width: 600px;
+    padding-left: 60px;
+}
+
+.hero-sub {
+    font-size: 18px;
+    margin-bottom: 10px;
+    opacity: 0.9;
 }
 
 .hero h1 {
     font-size: 52px;
     font-weight: 800;
+    line-height: 1.2;
 }
 
-.hero p {
-    color: #ccc;
+.hero .btn-danger {
+    background: #e63946;
+    border: none;
+    padding: 12px 24px;
+    font-weight: 600;
+    border-radius: 8px;
 }
 
 /* SECTION TITLE */
@@ -35,7 +63,7 @@ body {
     margin: 40px 0 20px;
 }
 
-/* BEST SELLERS SCROLL */
+/* BEST SELLERS */
 .best-wrapper {
     position: relative;
 }
@@ -54,10 +82,11 @@ body {
 
 .best-card {
     min-width: 280px;
-    background: #1c1c1c;
+    background: #fff;
     border-radius: 16px;
     padding: 15px;
     flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .best-card img {
@@ -73,20 +102,21 @@ body {
 }
 
 .best-card strong {
-    color: #f39c12;
+    color: #e67e22;
 }
 
-/* ARROWS */
+/* SCROLL BUTTONS */
 .scroll-btn {
     position: absolute;
-    top: 40%;
+    top: 45%;
     transform: translateY(-50%);
-    background: rgba(0,0,0,0.8);
-    border: none;
-    color: #fff;
+    background: #fff;
+    border: 1px solid #ddd;
+    color: #333;
     padding: 8px 12px;
     border-radius: 50%;
     z-index: 10;
+    cursor: pointer;
 }
 
 .scroll-btn.left { left: 0; }
@@ -94,37 +124,39 @@ body {
 
 /* MENU CARDS */
 .card {
-    background: #1c1c1c;
+    background: #fff;
     border-radius: 14px;
-    border: none;
+    border: 1px solid #eee;
     padding: 15px;
 }
 
 .card h5 {
-    color: #fff;
+    color: #111;
 }
 
 .card p {
-    color: #ccc;
+    color: #666;
 }
 
 .card strong {
-    color: #f39c12;
+    color: #e67e22;
 }
 
 /* FEATURES */
 .feature-box {
-    background: #1c1c1c;
+    background: #fff;
     padding: 20px;
     border-radius: 12px;
+    border: 1px solid #eee;
 }
 
-/* BOOK SECTION */
+/* RESERVE */
 .reserve-box {
-    background: #1c1c1c;
+    background: #fff;
     padding: 40px;
     border-radius: 16px;
     text-align: center;
+    border: 1px solid #eee;
 }
 
 .reserve-box h3 {
@@ -132,7 +164,7 @@ body {
 }
 
 .reserve-box p {
-    color: #ccc;
+    color: #666;
 }
 
 /* MAP */
@@ -144,28 +176,38 @@ body {
 
 /* MOBILE */
 @media (max-width: 768px) {
+    .hero {
+        height: 60vh;
+    }
+
+    .hero-content {
+        padding: 20px;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+    }
+
     .best-card {
         min-width: 220px;
     }
 
-    .hero h1 {
-        font-size: 34px;
+    .scroll-btn {
+        display: none;
     }
 }
 </style>
 
 <!-- HERO -->
 <div class="hero">
-    <h1>Authentic Italian Taste 🍝</h1>
-    <p>Experience the finest Italian cuisine in town</p>
-
-    <div class="mt-4">
-        <a href="/menu/" class="btn btn-warning me-2">🍽 Order Now</a>
-        <a href="/reserve/" class="btn btn-outline-light">📅 Book Table</a>
+    <div class="hero-content">
+        <p class="hero-sub">Best Italian Food in Rogers, AR</p>
+        <h1>Bringing The Heart Of Italy<br>To Arkansas Since 2009</h1>
+        <a href="/menu/" class="btn btn-danger mt-3">Order Online →</a>
     </div>
 </div>
 
-<!-- 🔥 BEST SELLERS -->
+<!-- BEST SELLERS -->
 <h3 class="section-title">Best Sellers</h3>
 
 <div class="best-wrapper">
@@ -177,13 +219,15 @@ body {
         <div class="best-card">
 
             {% if product.image %}
-            <img src="{{ product.image.url }}">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
             {% endif %}
 
             <h5>{{ product.name }}</h5>
             <strong>${{ product.price }}</strong>
 
         </div>
+        {% empty %}
+        <p>No best sellers available</p>
         {% endfor %}
     </div>
 
@@ -226,21 +270,30 @@ body {
     <div class="col-md-4 mb-4">
         <div class="feature-box">
             <h5>🍝 Authentic Taste</h5>
-            <p>Traditional Italian recipes with rich flavors</p>
+            <p>
+                Experience the true essence of Italy with our traditional recipes, crafted using time-tested techniques
+                and authentic ingredients. Every dish is prepared with care to deliver rich flavors and a memorable dining experience.
+            </p>
         </div>
     </div>
 
     <div class="col-md-4 mb-4">
         <div class="feature-box">
             <h5>🚀 Fast Service</h5>
-            <p>Quick delivery and best experience</p>
+            <p>
+                We pride ourselves on providing quick and efficient service without compromising quality.
+                Whether dining in or ordering online, you can expect timely delivery and a seamless experience every time.
+            </p>
         </div>
     </div>
 
     <div class="col-md-4 mb-4">
         <div class="feature-box">
             <h5>🏆 Premium Quality</h5>
-            <p>Top-quality ingredients & chefs</p>
+            <p>
+                Our dishes are made with the finest ingredients sourced from trusted suppliers and prepared by experienced chefs.
+                From fresh produce to handcrafted recipes, we ensure top-quality standards in every bite.
+            </p>
         </div>
     </div>
 </div>
@@ -252,7 +305,11 @@ body {
     <div class="col-md-4 mb-4">
         <div class="card p-3">
             ⭐⭐⭐⭐⭐
-            <p>"Amazing food and ambiance!"</p>
+            <p>
+                "Amazing food and ambiance! The pasta was perfectly cooked, the sauces were rich and authentic,
+                and the overall dining experience was fantastic. The staff was very friendly and attentive,
+                making sure everything was just right. Definitely one of the best places to enjoy Italian cuisine."
+            </p>
             <strong>- Customer</strong>
         </div>
     </div>
@@ -260,7 +317,11 @@ body {
     <div class="col-md-4 mb-4">
         <div class="card p-3">
             ⭐⭐⭐⭐⭐
-            <p>"Best Italian restaurant!"</p>
+            <p>
+                "Best Italian restaurant! From the moment we walked in, the atmosphere felt warm and welcoming.
+                The pizza had the perfect crust and fresh toppings, and the service was quick and professional.
+                Highly recommend this place for anyone looking for a quality dining experience."
+            </p>
             <strong>- Customer</strong>
         </div>
     </div>
@@ -268,7 +329,11 @@ body {
     <div class="col-md-4 mb-4">
         <div class="card p-3">
             ⭐⭐⭐⭐⭐
-            <p>"Loved pizza & pasta!"</p>
+            <p>
+                "Loved pizza & pasta! Every dish we tried was full of flavor and beautifully presented.
+                The ingredients tasted fresh, and the portion sizes were generous. It’s a perfect spot
+                for family dinners or casual outings with friends. Will definitely visit again!"
+            </p>
             <strong>- Customer</strong>
         </div>
     </div>
@@ -301,10 +366,13 @@ body {
 <!-- SCRIPT -->
 <script>
 function scrollBest(amount) {
-    document.getElementById("bestScroll").scrollBy({
-        left: amount,
-        behavior: "smooth"
-    });
+    const container = document.getElementById("bestScroll");
+    if (container) {
+        container.scrollBy({
+            left: amount,
+            behavior: "smooth"
+        });
+    }
 }
 </script>
 
