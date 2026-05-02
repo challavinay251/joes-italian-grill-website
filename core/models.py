@@ -1,5 +1,3 @@
-from django.db import models
-import re
 import re
 from django.db import models
 
@@ -35,9 +33,10 @@ class Gallery(models.Model):
 
 
 class Testimonial(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=150)
     rating = models.IntegerField(default=5)
-    review = models.TextField()
+    message = models.TextField()
+    source = models.CharField(max_length=50, default="Google")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

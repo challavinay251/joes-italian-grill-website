@@ -150,6 +150,30 @@ body {
     border: 1px solid #eee;
 }
 
+/* TESTIMONIALS (NEW) */
+.testimonial-card {
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #eee;
+    padding: 18px;
+    transition: 0.3s;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.stars {
+    color: #f39c12;
+    margin-bottom: 8px;
+}
+
+.testimonial-text {
+    color: #555;
+    font-size: 14px;
+}
+
 /* RESERVE */
 .reserve-box {
     background: #fff;
@@ -157,14 +181,6 @@ body {
     border-radius: 16px;
     text-align: center;
     border: 1px solid #eee;
-}
-
-.reserve-box h3 {
-    font-weight: 700;
-}
-
-.reserve-box p {
-    color: #666;
 }
 
 /* MAP */
@@ -176,25 +192,11 @@ body {
 
 /* MOBILE */
 @media (max-width: 768px) {
-    .hero {
-        height: 60vh;
-    }
-
-    .hero-content {
-        padding: 20px;
-    }
-
-    .hero h1 {
-        font-size: 32px;
-    }
-
-    .best-card {
-        min-width: 220px;
-    }
-
-    .scroll-btn {
-        display: none;
-    }
+    .hero { height: 60vh; }
+    .hero-content { padding: 20px; }
+    .hero h1 { font-size: 32px; }
+    .best-card { min-width: 220px; }
+    .scroll-btn { display: none; }
 }
 </style>
 
@@ -211,52 +213,41 @@ body {
 <h3 class="section-title">Best Sellers</h3>
 
 <div class="best-wrapper">
-
     <button class="scroll-btn left" onclick="scrollBest(-300)">❮</button>
 
     <div class="best-scroll" id="bestScroll">
         {% for product in best_sellers %}
         <div class="best-card">
-
             {% if product.image %}
-            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            <img src="{{ product.image.url }}">
             {% endif %}
-
             <h5>{{ product.name }}</h5>
             <strong>${{ product.price }}</strong>
-
         </div>
-        {% empty %}
-        <p>No best sellers available</p>
         {% endfor %}
     </div>
 
     <button class="scroll-btn right" onclick="scrollBest(300)">❯</button>
-
 </div>
 
 <!-- MENU -->
 <h3 class="section-title">Our Menu</h3>
 
 <div class="row">
-    {% for product in products|slice:":4" %}
-    <div class="col-md-6 mb-4">
-        <div class="card d-flex flex-row align-items-center">
-
-            <div style="flex:1;">
-                <h5>{{ product.name }}</h5>
-                <p>{{ product.description|truncatewords:8 }}</p>
-                <strong>${{ product.price }}</strong>
-            </div>
-
-            {% if product.image %}
-            <img src="{{ product.image.url }}"
-                 style="width:90px; height:70px; object-fit:cover; border-radius:8px;">
-            {% endif %}
-
+{% for product in products|slice:":4" %}
+<div class="col-md-6 mb-4">
+    <div class="card d-flex flex-row align-items-center">
+        <div style="flex:1;">
+            <h5>{{ product.name }}</h5>
+            <p>{{ product.description|truncatewords:8 }}</p>
+            <strong>${{ product.price }}</strong>
         </div>
+        {% if product.image %}
+        <img src="{{ product.image.url }}" style="width:90px;height:70px;border-radius:8px;">
+        {% endif %}
     </div>
-    {% endfor %}
+</div>
+{% endfor %}
 </div>
 
 <div class="text-center">
@@ -270,73 +261,51 @@ body {
     <div class="col-md-4 mb-4">
         <div class="feature-box">
             <h5>🍝 Authentic Taste</h5>
-            <p>
-                Experience the true essence of Italy with our traditional recipes, crafted using time-tested techniques
-                and authentic ingredients. Every dish is prepared with care to deliver rich flavors and a memorable dining experience.
-            </p>
+            <p>Experience traditional Italian recipes with rich flavors.</p>
         </div>
     </div>
 
     <div class="col-md-4 mb-4">
         <div class="feature-box">
             <h5>🚀 Fast Service</h5>
-            <p>
-                We pride ourselves on providing quick and efficient service without compromising quality.
-                Whether dining in or ordering online, you can expect timely delivery and a seamless experience every time.
-            </p>
+            <p>Quick service without compromising quality.</p>
         </div>
     </div>
 
     <div class="col-md-4 mb-4">
         <div class="feature-box">
             <h5>🏆 Premium Quality</h5>
-            <p>
-                Our dishes are made with the finest ingredients sourced from trusted suppliers and prepared by experienced chefs.
-                From fresh produce to handcrafted recipes, we ensure top-quality standards in every bite.
-            </p>
+            <p>Top-quality ingredients and expert chefs.</p>
         </div>
     </div>
 </div>
 
-<!-- REVIEWS -->
-<h3 class="section-title">What Our Customers Say</h3>
+<!-- TESTIMONIALS -->
+<h3 class="section-title"> What Our Customers Say</h3>
 
 <div class="row">
-    <div class="col-md-4 mb-4">
-        <div class="card p-3">
-            ⭐⭐⭐⭐⭐
-            <p>
-                "Amazing food and ambiance! The pasta was perfectly cooked, the sauces were rich and authentic,
-                and the overall dining experience was fantastic. The staff was very friendly and attentive,
-                making sure everything was just right. Definitely one of the best places to enjoy Italian cuisine."
-            </p>
-            <strong>- Customer</strong>
+{% for t in testimonials %}
+<div class="col-md-4 mb-4">
+    <div class="testimonial-card">
+        <div class="stars">
+            {% for i in "12345"|slice:":t.rating" %}⭐{% endfor %}
         </div>
+        <p class="testimonial-text">"{{ t.message }}"</p>
+        <strong>- {{ t.name }}</strong>
+        <small class="text-muted d-block">Google Review</small>
     </div>
+</div>
+{% empty %}
+<p class="text-center">Customer feedback coming soon.</p>
+{% endfor %}
+</div>
 
-    <div class="col-md-4 mb-4">
-        <div class="card p-3">
-            ⭐⭐⭐⭐⭐
-            <p>
-                "Best Italian restaurant! From the moment we walked in, the atmosphere felt warm and welcoming.
-                The pizza had the perfect crust and fresh toppings, and the service was quick and professional.
-                Highly recommend this place for anyone looking for a quality dining experience."
-            </p>
-            <strong>- Customer</strong>
-        </div>
-    </div>
-
-    <div class="col-md-4 mb-4">
-        <div class="card p-3">
-            ⭐⭐⭐⭐⭐
-            <p>
-                "Loved pizza & pasta! Every dish we tried was full of flavor and beautifully presented.
-                The ingredients tasted fresh, and the portion sizes were generous. It’s a perfect spot
-                for family dinners or casual outings with friends. Will definitely visit again!"
-            </p>
-            <strong>- Customer</strong>
-        </div>
-    </div>
+<div class="text-center mt-3">
+    <a href="https://www.google.com/maps/place/Joe's+Italian+Grill+with+Indian+Kitchen/@36.3371959,-94.2127547,17z/data=!4m8!3m7!1s0x87c910414fc20445:0xb941813d6f86b13f!8m2!3d36.3371959!4d-94.2101798!9m1!1b1!16s%2Fg%2F11b8b3njms?hl=en-US&entry=ttu&g_ep=EgoyMDI2MDQyOS4wIKXMDSoASAFQAw%3D%3D"
+       target="_blank"
+       class="btn btn-warning">
+       ⭐ View Reviews on Google
+    </a>
 </div>
 
 <!-- RESERVE -->
@@ -357,22 +326,13 @@ body {
     </div>
 
     <div class="col-md-6 map-box">
-        <a href="https://maps.app.goo.gl/wtaNLyFgYZxqZenh8" target="_blank">
-            <iframe src="https://maps.google.com/maps?q=rogers%20ar&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
-        </a>
+        <iframe src="https://maps.google.com/maps?q=rogers%20ar&output=embed"></iframe>
     </div>
 </div>
 
-<!-- SCRIPT -->
 <script>
 function scrollBest(amount) {
-    const container = document.getElementById("bestScroll");
-    if (container) {
-        container.scrollBy({
-            left: amount,
-            behavior: "smooth"
-        });
-    }
+    document.getElementById("bestScroll").scrollBy({ left: amount, behavior: "smooth" });
 }
 </script>
 

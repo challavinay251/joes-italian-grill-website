@@ -1,23 +1,21 @@
 from django.db.models import Q
 from products.models import Category, Product
 from .models import Gallery
-from .models import Testimonial
 from products.models import Product
 from django.shortcuts import render
 from django.core.mail import send_mail
 from django.conf import settings
-
-
+from core.models import Testimonial
 
 def home(request):
     best_sellers = Product.objects.filter(is_best_seller=True)
     products = Product.objects.all()[:6]
-    testimonials = Testimonial.objects.all().order_by('-id')[:6]
+    testimonials = Testimonial.objects.all().order_by('-rating', '-created_at')[:6]
 
     return render(request, 'home.html', {
         'best_sellers': best_sellers,
         'products': products,
-        'testimonials': testimonials
+        'testimonials': testimonials,
     })
 
 def faq(request):
