@@ -174,6 +174,13 @@ body {
     font-size: 14px;
 }
 
+.accordion-button {
+    font-weight: 600;
+}
+
+.accordion-body {
+    color: #555;
+}
 /* RESERVE */
 .reserve-box {
     background: #fff;
@@ -198,6 +205,48 @@ body {
     .best-card { min-width: 220px; }
     .scroll-btn { display: none; }
 }
+/* SPECIAL EVENTS SECTION */
+.event-section {
+    background: #fff;
+    padding: 60px 20px;
+    border-radius: 16px;
+    border: 1px solid #eee;
+}
+
+.event-heading {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+.event-description {
+    color: #555;
+    line-height: 1.7;
+    font-size: 15px;
+}
+
+.event-img {
+    height: 320px;
+    width: 100%;
+    object-fit: cover;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .event-section {
+        padding: 30px 15px;
+    }
+
+    .event-heading {
+        font-size: 24px;
+    }
+
+    .event-img {
+        margin-top: 20px;
+        height: 250px;
+    }
+}
+
 </style>
 
 <!-- HERO -->
@@ -280,6 +329,42 @@ body {
     </div>
 </div>
 
+
+<!-- SPECIAL EVENTS CTA -->
+<div class="event-section mt-5 mb-5">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <!-- LEFT TEXT -->
+            <div class="col-md-6">
+                <h2 class="event-heading">
+                    Host Your Special Event With Us
+                </h2>
+
+                <p class="event-description">
+                    Celebrate life’s memorable moments with the authentic flavors and warm hospitality of our restaurant.
+                    Whether it’s a birthday, anniversary, corporate gathering, or any special occasion,
+                    our inviting space and expertly crafted Italian cuisine will make your event truly unforgettable.
+                    Let us take care of every detail so you can focus on enjoying time with your guests.
+                </p>
+                <p class="text-muted">
+                Weddings • Birthdays • Corporate Events • Private Parties
+                </p>
+                <a href="/special-events/" class="btn btn-warning mt-3 px-4">
+                    Book Now
+                </a>
+            </div>
+
+            <!-- RIGHT IMAGE -->
+            <div class="col-md-6">
+                <img src="https://images.unsplash.com/photo-1555244162-803834f70033"
+                     class="img-fluid rounded event-img">
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <!-- TESTIMONIALS -->
 <h3 class="section-title"> What Our Customers Say</h3>
 
@@ -313,6 +398,40 @@ body {
     <h3>📅 Reserve Your Table</h3>
     <p>Book now and enjoy premium dining</p>
     <a href="/reserve/" class="btn btn-warning">Book Now</a>
+</div>
+
+<!-- FAQ SECTION -->
+<h3 class="section-title mt-5"> Frequently Asked Questions</h3>
+
+<div class="accordion" id="faqAccordion">
+
+{% for faq in faqs %}
+<div class="accordion-item mb-2">
+
+    <h2 class="accordion-header">
+        <button class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#faq{{ forloop.counter }}">
+            {{ faq.question }}
+        </button>
+    </h2>
+
+    <div id="faq{{ forloop.counter }}"
+         class="accordion-collapse collapse"
+         data-bs-parent="#faqAccordion">
+
+        <div class="accordion-body">
+            {{ faq.answer }}
+        </div>
+
+    </div>
+
+</div>
+{% empty %}
+<p class="text-center text-muted">FAQs will be updated soon.</p>
+{% endfor %}
+
 </div>
 
 <!-- VISIT -->

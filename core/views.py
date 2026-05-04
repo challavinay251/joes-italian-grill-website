@@ -5,21 +5,21 @@ from products.models import Product
 from django.shortcuts import render
 from django.core.mail import send_mail
 from django.conf import settings
-from core.models import Testimonial
+from core.models import Testimonial,FAQ
 
 def home(request):
     best_sellers = Product.objects.filter(is_best_seller=True)
     products = Product.objects.all()[:6]
     testimonials = Testimonial.objects.all().order_by('-rating', '-created_at')[:6]
+    faqs = FAQ.objects.all().order_by('order')
 
     return render(request, 'home.html', {
         'best_sellers': best_sellers,
         'products': products,
         'testimonials': testimonials,
+        'faqs': faqs,
     })
 
-def faq(request):
-    return render(request, 'faq.html')
 
 def offers(request):
     offers = Product.objects.filter(is_offer=True)

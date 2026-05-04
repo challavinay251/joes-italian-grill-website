@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
-from django.core.mail import send_mail
-from django.conf import settings
 from datetime import date
 from .models import Reservation
+from django.shortcuts import render
+from django.core.mail import send_mail
+from django.conf import settings
+from .models import EventBooking
 
 
 def reserve(request):
@@ -70,3 +72,50 @@ def reserve(request):
         'success': success,
         'today': date.today()
     })
+
+
+def special_events(request):
+    success = False
+
+    if request.method == "POST":
+        data = request.POST
+
+        EventBooking.objects.create(
+            name=data.get("name"),
+            email=data.get("email"),
+            phone=data.get("phone"),
+            event_date=data.get("event_date"),
+            event_time=data.get("event_time"),
+            event_type=data.get("event_type"),
+            guests=data.get("guests"),
+            need_catering=True if data.get("need_catering") == "yes" else False,
+            description=data.get("description"),
+        )
+
+        # Email to ADMIN
+        send_mail(
+            "New Event Booking Request",
+            f"""
+New event request received:
+
+Name: {data.get("name")}
+Email: {data.get("email")}
+Phone: {data.get("phone")}
+
+Event: {data.get("event_type")}
+Date: {data.get("event_date")}
+Time: {data.get("event_time")}
+
+Guests: {data.get("guests")}
+Catering: {data.get("need_catering")}
+
+Description:
+{data.get("description")}
+            """,
+            settings.EMAIL_HOST_USER,
+            [settings.EMAIL_HOST_USER],
+        )
+
+        success = True
+
+    return render(request, "reservations/special_events.html", {"success": success})

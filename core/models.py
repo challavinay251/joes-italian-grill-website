@@ -41,3 +41,13 @@ class Testimonial(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.rating}⭐)"
+
+
+
+class FAQ(models.Model):
+    question = models.CharField(max_length=255)
+    answer = models.TextField()
+    order = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.question

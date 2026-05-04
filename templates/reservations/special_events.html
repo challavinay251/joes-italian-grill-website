@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+.event-section {
+    padding: 60px 0;
+}
+
+.event-title {
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+.event-text {
+    color: #555;
+    line-height: 1.7;
+}
+
+.form-box {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #eee;
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.btn-submit {
+    background: #e63946;
+    color: #fff;
+    font-weight: 600;
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+}
+</style>
+
+<div class="container event-section">
+    <div class="row">
+
+        <!-- LEFT CONTENT -->
+        <div class="col-md-6">
+            <h2 class="event-title">Special Events</h2>
+
+            <p class="event-text">
+                Planning a special event? Our team can help you create a memorable dining experience.
+                Private dining rooms available. Customized menus and event planning support included.
+            </p>
+        </div>
+
+        <!-- FORM -->
+        <div class="col-md-6">
+            <div class="form-box">
+
+                {% if success %}
+                <div class="alert alert-success">
+                    Request sent successfully!
+                </div>
+                {% endif %}
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <input type="text" name="name" placeholder="Name" class="form-control mb-2" required>
+                    <input type="email" name="email" placeholder="Email" class="form-control mb-2" required>
+                    <input type="text" name="phone" placeholder="Phone" class="form-control mb-2" required>
+
+                    <label>Date & Time</label>
+                    <div class="d-flex gap-2 mb-2">
+                        <input type="date" name="event_date" class="form-control" required>
+                        <input type="time" name="event_time" class="form-control" required>
+                    </div>
+
+                    <label>Event Type</label>
+                    <select name="event_type" class="form-control mb-2">
+                        <option value="birthday">Birthday Party</option>
+                        <option value="corporate">Corporate Event</option>
+                        <option value="private">Private Party</option>
+                    </select>
+
+                    <label>Guests</label>
+                    <select name="guests" class="form-control mb-2">
+                        <option>1-9</option>
+                        <option>10-20</option>
+                        <option>20-50</option>
+                        <option>50+</option>
+                    </select>
+
+                    <label>Catering Required?</label>
+                    <select name="need_catering" class="form-control mb-2">
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+
+                    <label>Event Details</label>
+                    <textarea name="description" rows="3" class="form-control"></textarea>
+
+                    <button class="btn-submit mt-3">
+                        SEND EVENT REQUEST
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
